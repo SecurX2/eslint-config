@@ -111,12 +111,6 @@ const boundariesConfig: FlatConfigArray = [
               from: 'tooling',
             },
 
-            // Public assets are read-only (no imports)
-            {
-              from: 'assets',
-              allow: [],
-            },
-
             // Root configuration files are isolated
             {
               allow: ['root-config'],
@@ -346,7 +340,7 @@ const boundariesConfig: FlatConfigArray = [
         'out/**/*',
         'node_modules/**/*',
         'public/**/*',
-        '**/*.md/**/*',
+        '**/*.md',
       ],
     },
     files: ['**/*.{js,jsx,ts,tsx}'],
