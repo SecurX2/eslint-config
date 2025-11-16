@@ -89,6 +89,7 @@
     "build:watch": "tsc --watch",
     "clean": "rm -rf dist",
     "lint": "eslint . --cache --config eslint.config.mjs",
+    "lint:inspect": "eslint --inspect-config --config eslint.config.mjs",
     "prepare": "npm run build",
     "prepublishOnly": "npm run clean && npm run build && npm run typecheck",
     "test": "npm run lint && npm run typecheck",
