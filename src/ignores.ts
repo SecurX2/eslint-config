@@ -15,7 +15,6 @@ export const globalIgnores: FlatConfig = createGlobalIgnores([
   // Generated files
   'lib/generated-api/',
   '**/next-env.d.ts',
-  '**/components/event-calendar/',
 
   // Lock files
   'package-lock.json',
