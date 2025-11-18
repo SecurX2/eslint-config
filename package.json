@@ -1,7 +1,7 @@
 {
-  "author": "djankies",
+  "author": "SecurX",
   "bugs": {
-    "url": "https://github.com/djankies/eslint-config/issues"
+    "url": "https://github.com/securx/eslint-config/issues"
   },
   "dependencies": {
     "@eslint/compat": "*",
@@ -67,22 +67,20 @@
     "!**/*.test.*",
     "!**/*.spec.*"
   ],
-  "homepage": "https://github.com/djankies/eslint-config#readme",
+  "homepage": "https://github.com/securx/eslint-config#readme",
   "keywords": [
     "eslint",
     "config",
     "typescript",
     "nextjs"
   ],
-  "license": "MIT",
+  "license": "UNLICENSED",
   "main": "dist/index.js",
-  "name": "@djankies/eslint-config",
-  "publishConfig": {
-    "access": "public"
-  },
+  "name": "@securx/eslint-config",
+  "private": true,
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/djankies/eslint-config.git"
+    "url": "git+https://github.com/securx/eslint-config.git"
   },
   "scripts": {
     "build": "tsc",
