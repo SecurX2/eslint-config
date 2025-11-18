@@ -28,6 +28,10 @@ const boundariesConfig: FlatConfigArray = [
                 'mock',
                 'api',
                 'ui',
+                'auth',
+                'context',
+                'data',
+                'domain',
               ],
               from: 'app',
             },
@@ -44,13 +48,37 @@ const boundariesConfig: FlatConfigArray = [
               from: 'navigation',
             },
             {
-              allow: ['ui', 'service', 'api', 'hook', 'util', 'type', 'mock', 'generated-api'],
+              allow: ['ui', 'service', 'api', 'hook', 'util', 'type', 'mock', 'generated-api', 'auth', 'data', 'domain'],
               from: 'dialog',
             },
 
             {
-              allow: ['external-component', 'ui', 'util', 'type'],
+              allow: ['external-component', 'ui', 'hook', 'service', 'api', 'util', 'type', 'generated-api', 'other', 'auth', 'data', 'domain'],
               from: 'external-component',
+            },
+
+            // Authentication layer - can access data and amplify
+            {
+              allow: ['data', 'amplify-backend', 'util', 'type', 'config'],
+              from: 'auth',
+            },
+
+            // React contexts - can access data, auth, hooks
+            {
+              allow: ['data', 'auth', 'hook', 'util', 'type'],
+              from: 'context',
+            },
+
+            // Data access layer - only infrastructure dependencies
+            {
+              allow: ['amplify-backend', 'util', 'type', 'config', 'mock'],
+              from: 'data',
+            },
+
+            // Domain business logic - can access data and auth layers
+            {
+              allow: ['domain', 'data', 'auth', 'util', 'type', 'config'],
+              from: 'domain',
             },
 
             {
@@ -84,7 +112,7 @@ const boundariesConfig: FlatConfigArray = [
             },
 
             {
-              allow: ['service', 'api', 'util', 'type', 'mock', 'generated-api', 'amplify-backend'],
+              allow: ['service', 'api', 'util', 'type', 'mock', 'generated-api', 'amplify-backend', 'auth', 'data', 'domain', 'context'],
               from: 'hook',
             },
 
@@ -111,6 +139,12 @@ const boundariesConfig: FlatConfigArray = [
               from: 'tooling',
             },
 
+            // Prisma schema is completely isolated (just schema definition)
+            {
+              allow: ['database-schema'],
+              from: 'database-schema',
+            },
+
             // Root configuration files are isolated
             {
               allow: ['root-config'],
@@ -135,6 +169,10 @@ const boundariesConfig: FlatConfigArray = [
                 'api',
                 'app',
                 'ui',
+                'auth',
+                'context',
+                'data',
+                'domain',
               ],
               from: 'test',
             },
@@ -173,8 +211,11 @@ const boundariesConfig: FlatConfigArray = [
               allow: '*.{js,ts}',
             },
             {
+              target: ['external-component'],
+              allow: '*',
+            },
+            {
               target: [
-                'external-component',
                 'amplify-backend',
                 'dashboard',
                 'test-mock',
@@ -187,12 +228,20 @@ const boundariesConfig: FlatConfigArray = [
                 'test',
                 'api',
                 'app',
+                'auth',
+                'context',
+                'data',
+                'domain',
               ],
               allow: '*.{js,jsx,ts,tsx}',
             },
             {
-              target: ['tooling', 'assets', 'root-config', 'other'],
+              target: ['tooling', 'assets', 'root-config', 'database-schema'],
               allow: '*',
+            },
+            {
+              target: ['other'],
+              allow: '**/*.{js,jsx,ts,tsx}',
             },
           ],
           default: 'disallow',
@@ -237,6 +286,30 @@ const boundariesConfig: FlatConfigArray = [
           type: 'external-component',
         },
 
+        // Authentication Layer
+        {
+          pattern: 'lib/auth/**/*',
+          type: 'auth',
+        },
+
+        // React Contexts (State Management)
+        {
+          pattern: 'lib/contexts/**/*',
+          type: 'context',
+        },
+
+        // Data Access Layer (Repositories & Prisma)
+        {
+          pattern: 'lib/data/**/*',
+          type: 'data',
+        },
+
+        // Domain Business Logic - Events
+        {
+          pattern: 'lib/events/**/*',
+          type: 'domain',
+        },
+
         // Business Logic Layer
         {
           pattern: 'lib/services/**/*',
@@ -247,6 +320,12 @@ const boundariesConfig: FlatConfigArray = [
         {
           pattern: 'lib/api.ts',
           type: 'api',
+        },
+
+        // Root-level lib utilities (logger, utilities, etc.)
+        {
+          pattern: ['lib/*.ts', 'lib/*.tsx'],
+          type: 'util',
         },
 
         // Generated API (should be isolated)
@@ -291,6 +370,12 @@ const boundariesConfig: FlatConfigArray = [
         {
           pattern: ['.claude/**/*', '.specify/**/*', 'specs/**/*'],
           type: 'tooling',
+        },
+
+        // Prisma Schema (Database Definition)
+        {
+          pattern: 'prisma/**/*',
+          type: 'database-schema',
         },
 
         // Public Assets
@@ -340,6 +425,7 @@ const boundariesConfig: FlatConfigArray = [
         'out/**/*',
         'node_modules/**/*',
         'public/**/*',
+        'prisma/**/*',
         '**/*.md',
       ],
     },
