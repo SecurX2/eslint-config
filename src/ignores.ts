@@ -21,6 +21,17 @@ export const globalIgnores: FlatConfig = createGlobalIgnores([
   'yarn.lock',
   'pnpm-lock.yaml',
 
+  // Database
+  '**/database/',
+  '**/prisma/migrations/',
+
+  // Git
+  '**/.git/',
+
+  // AWS Amplify
+  '**/.amplify/',
+  '**/amplify/{data,auth}/',
+
   // Tool directories
   '**/.vscode/',
   '**/.claude/',
@@ -36,11 +47,19 @@ export const globalIgnores: FlatConfig = createGlobalIgnores([
 
   // ESLint config package
   '@eslint-config/',
+  '.eslint-config/',
 
   // CSS
   '**/*.css',
   '**/*.scss',
   '**/*.sass',
+
+  // Project-specific
+  'app/examples/auth-usage-examples.tsx',
+  'components/event-calendar/README.md',
+  'docs/',
+  'examples/**/README.md',
+  'lib/mock-data/',
 ]);
 
 export default globalIgnores;

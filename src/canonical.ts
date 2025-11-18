@@ -52,13 +52,7 @@ export const canonical: FlatConfigArray = [
           next: '*',
         },
       ],
-      'canonical/filename-match-regex': [
-        1,
-        {
-          regex: '^[a-z]+(?:-[a-z0-9]+)*(?:\\.[a-z]+(?:-[a-z0-9]+)*)*$',
-          ignoreExporting: false,
-        },
-      ],
+      'canonical/filename-match-regex': 0,
       'unicorn/numeric-separators-style': [
         2,
         {
